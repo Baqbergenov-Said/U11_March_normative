@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+</head>
+<body>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" width="300">
+    {% endif %}
+    <h1>{{ post.title }}</h1>
+    <p>{{ post.content }}</p>
+
+    {% if post.pk %}
+        <a href="{% url 'post_update' post.pk %}">Edit</a>
+        <a href="{% url 'post_delete' post.pk %}">Delete</a>
+    {% endif %}
+    
+    <a href="{% url 'post_list' %}">Back</a>
+</body>
+</html>
