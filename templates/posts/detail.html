@@ -1,20 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{ post.title }}</title>
-</head>
-<body>
-    {% if post.image %}
-        <img src="{{ post.image.url }}" width="300">
-    {% endif %}
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.content }}</p>
+{% extends 'base.html' %}
 
-    {% if post.pk %}
-        <a href="{% url 'post_update' post.pk %}">Edit</a>
-        <a href="{% url 'post_delete' post.pk %}">Delete</a>
-    {% endif %}
-    
-    <a href="{% url 'post_list' %}">Back</a>
-</body>
-</html>
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}"
+                     style="max-height: 400px; object-fit: cover;">
+            {% endif %}
+
+            <div class="card-body">
+                <h2 class="card-title">{{ post.title }}</h2>
+                <p class="text-muted mb-3">
+                    ✍️ {{ post.author.username }} |
+                    📅 {{ post.created_at|date:"d.m.Y H:i" }}
+                </p>
+                <hr>
+                <p class="card-text">{{ post.content|linebreaks }}</p>
+            </div>
+
+            <div class="card-footer d-flex gap-2">
+                <a href="{% url 'post_list' %}" class="btn btn-secondary">
+                    ← Ortga
+                </a>
+
+                {% if perms.posts.change_post %}
+                    <a href="{% url 'post_update' post.pk %}" class="btn btn-warning">
+                        ✏️ Tahrirlash
+                    </a>
+                {% endif %}
+
+                {% if perms.posts.delete_post %}
+                    <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger">
+                        🗑 O'chirish
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
