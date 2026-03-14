@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Kirish{% endblock %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-5">
         <div class="card shadow">
             <div class="card-header">
-                <h4>🔐 Tizimga kirish</h4>
+                <h4>🔐 Login</h4>
             </div>
             <div class="card-body">
                 <form method="post">
@@ -25,19 +25,25 @@
 
                     {% if form.errors %}
                         <div class="alert alert-danger">
-                            Username yoki parol noto'g'ri!
+                            Invalid username or password!
                         </div>
                     {% endif %}
 
                     <button type="submit" class="btn btn-primary w-100">
-                        🔑 Kirish
+                        🔑 Login
                     </button>
                 </form>
 
+                <div class="text-end mt-2">
+                    <a href="{% url 'forgot-password' %}" class="text-muted small">
+                        🔑 Forgot password?
+                    </a>
+                </div>
+
                 <hr>
                 <p class="text-center">
-                    Akkauntingiz yo'qmi?
-                    <a href="{% url 'register' %}">Ro'yxatdan o'ting</a>
+                    You don't have an account?
+                    <a href="{% url 'register' %}">Sign up</a>
                 </p>
             </div>
         </div>

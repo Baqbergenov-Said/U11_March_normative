@@ -9,7 +9,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'post_list' %}">📝 Post CRUD</a>
+        <a class="navbar-brand" href="{% url 'post_list' %}">📝KunUZ</a>
         <div class="navbar-nav ms-auto">
             {% if user.is_authenticated %}
                 <span class="navbar-text text-light me-3">
@@ -18,10 +18,10 @@
                         <span class="badge bg-info">{{ user.groups.first.name }}</span>
                     {% endif %}
                 </span>
-                <a class="nav-link text-light" href="{% url 'logout' %}">Chiqish</a>
+                <a class="nav-link text-light" href="{% url 'logout' %}">Logout</a>
             {% else %}
-                <a class="nav-link text-light" href="{% url 'login' %}">Kirish</a>
-                <a class="nav-link text-light" href="{% url 'register' %}">Ro'yxatdan o'tish</a>
+                <a class="nav-link text-light" href="{% url 'login' %}">Login in</a>
+                <a class="nav-link text-light" href="{% url 'register' %}">Sign up</a>
             {% endif %}
         </div>
     </div>
