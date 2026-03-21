@@ -11,7 +11,6 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-from django import forms
 
 
 class ForgotPasswordForm(forms.Form):
@@ -37,7 +36,7 @@ class NewPasswordForm(forms.Form):
     new_password = forms.CharField(
         widget=forms.PasswordInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Enter your new password',
+            'placeholder': 'Enter your new password',   
         })
     )
     conf_password = forms.CharField(

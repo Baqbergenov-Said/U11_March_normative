@@ -35,7 +35,7 @@ def login_view(request):
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
-        return redirect('login')
+        return redirect('Accounts:login')
     return render(request, 'accounts/logout.html')
 
 # Validation for password reset forms
@@ -67,7 +67,7 @@ def forgot_password_view(request):
 
             request.session['reset_username'] = username
             messages.success(request, f"{user.email} verification code has been sent to your email.")
-            return redirect('verify-code')
+            return redirect('Accounts:verify-code')
 
     return render(request, 'accounts/forgot_password.html', {'form': form})
 
@@ -76,12 +76,12 @@ def restore_password_view(request):
 
     if not username:
         messages.error(request, "Please enter your username first!")
-        return redirect('forgot-password')
+        return redirect('Accounts:forgot-password')
 
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
-        return redirect('forgot-password')
+        return redirect('Accounts:forgot-password')
 
     form = NewPasswordForm(user=user)
 
@@ -96,7 +96,7 @@ def restore_password_view(request):
 
             del request.session['reset_username']
             messages.success(request, "Password updated successfully! Please login.")
-            return redirect('login')
+            return redirect('Accounts:login')
 
     return render(request, 'accounts/restore_password.html', {'form': form})
 
@@ -106,7 +106,7 @@ def verify_code_view(request):
 
     if not username:
         messages.error(request, "Please enter your username first!")
-        return redirect('forgot-password')
+        return redirect('Accounts:forgot-password')
 
     if request.method == 'POST':
         form = CodeVerifyForm(request.POST)
@@ -116,7 +116,7 @@ def verify_code_view(request):
             try:
                 user = User.objects.get(username=username)
             except User.DoesNotExist:
-                return redirect('forgot-password')
+                return redirect('Accounts:forgot-password')
 
             try:
                 verification = VerificationCode.objects.get(
@@ -130,10 +130,10 @@ def verify_code_view(request):
             if verification.is_expired():
                 verification.delete()
                 messages.error(request, "Code has expired! Please try again.")
-                return redirect('forgot-password')
+                return redirect('Accounts:forgot-password')
 
             verification.delete()
             request.session['code_verified'] = True
-            return redirect('restore-password')  
+            return redirect('Accounts:restore-password')  
 
     return render(request, 'accounts/code.html', {'form': form})
