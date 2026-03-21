@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
@@ -18,11 +19,21 @@
                         <span class="badge bg-info">{{ user.groups.first.name }}</span>
                     {% endif %}
                 </span>
-                <a class="nav-link text-light" href="{% url 'Accounts:logout' %}">Logout</a>
+                <a class="nav-link text-light" href="{% url 'Accounts:logout' %}">{% trans "Logout" %}</a>
             {% else %}
-                <a class="nav-link text-light" href="{% url 'Accounts:login' %}">Login in</a>
-                <a class="nav-link text-light" href="{% url 'Accounts:register' %}">Sign up</a>
+                <a class="nav-link text-light" href="{% url 'Accounts:login' %}">{% trans "Login" %}</a>
+                <a class="nav-link text-light" href="{% url 'Accounts:register' %}">{% trans "Sign up" %}</a>
             {% endif %}
+
+            <!-- Language switcher -->
+            <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center ms-3">
+                {% csrf_token %}
+                <input name="next" type="hidden" value="{{ request.path }}">
+                <select name="language" class="form-select form-select-sm" onchange="this.form.submit()">
+                    <option value="en" {% if request.LANGUAGE_CODE == 'en' %}selected{% endif %}>English</option>
+                    <option value="uz" {% if request.LANGUAGE_CODE == 'uz' %}selected{% endif %}>Uzbek</option>
+                </select>
+            </form>
         </div>
     </div>
 </nav>

@@ -1,59 +1,71 @@
 {% extends 'base.html' %}
-
-{% block title %}Registration{% endblock %}
-
+{% load i18n %}
+{% block title %}{% trans "Registration" %}{% endblock %}
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-5">
         <div class="card shadow">
             <div class="card-header">
-                <h4>📝 Registration</h4>
+                <h4>📝 {% trans "Registration" %}</h4>
             </div>
             <div class="card-body">
                 <form method="post">
                     {% csrf_token %}
-
                     <div class="mb-3">
-                        <label class="form-label">Username</label>
+                        <label class="form-label">{% trans "Username" %}</label>
                         {{ form.username }}
                         {% if form.username.errors %}
                             <div class="text-danger small">{{ form.username.errors }}</div>
                         {% endif %}
                     </div>
-
                     <div class="mb-3">
-                        <label class="form-label">Email</label>
+                        <label class="form-label">{% trans "Email" %}</label>
                         {{ form.email }}
                     </div>
-
                     <div class="mb-3">
-                        <label class="form-label">Parol</label>
-                        {{ form.password1 }}
+                        <label class="form-label">{% trans "Password" %}</label>
+                        <div class="input-group">
+                            {{ form.password1 }}
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('id_password1', this)">👁</button>
+                        </div>
                         {% if form.password1.errors %}
                             <div class="text-danger small">{{ form.password1.errors }}</div>
                         {% endif %}
                     </div>
-
                     <div class="mb-3">
-                        <label class="form-label">Confirm Password</label>
-                        {{ form.password2 }}
+                        <label class="form-label">{% trans "Confirm Password" %}</label>
+                        <div class="input-group">
+                            {{ form.password2 }}
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('id_password2', this)">👁</button>
+                        </div>
                         {% if form.password2.errors %}
                             <div class="text-danger small">{{ form.password2.errors }}</div>
                         {% endif %}
                     </div>
-
                     <button type="submit" class="btn btn-primary w-100">
-                        ✅ Registration
+                        ✅ {% trans "Registration" %}
                     </button>
                 </form>
-
                 <hr>
                 <p class="text-center">
-                    Akkauntingiz bormi?
-                    <a href="{% url 'Accounts:login' %}">Login</a>
+                    {% trans "Already have an account?" %}
+                    <a href="{% url 'Accounts:login' %}">{% trans "Login" %}</a>
                 </p>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+  function togglePassword(fieldId, btn) {
+    const input = document.getElementById(fieldId);
+    if (input.type === 'password') {
+      input.type = 'text';
+      btn.textContent = '🙈';
+    } else {
+      input.type = 'password';
+      btn.textContent = '👁';
+    }
+  }
+</script>
 {% endblock %}

@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Postlar ro'yxati{% endblock %}
+{% block title %}{% trans "Post List" %}{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>📋 Postlar</h2>
+    <h2>📋 {% trans "Post List" %}</h2>
 
-    {# 7-Normativ: Template darajasida permission tekshirish #}
+    {# 7-Normativ: Check permission at template level #}
     {% if perms.posts.add_post %}
         <a href="{% url 'post_create' %}" class="btn btn-success">
-            ➕ Yangi Post
+            ➕ {% trans "Create Post" %}
         </a>
     {% endif %}
 </div>
@@ -38,18 +39,18 @@
 
                 <div class="card-footer d-flex gap-2">
                     <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary btn-sm">
-                        👁 Ko'rish
+                        👁 {% trans "View" %}
                     </a>
 
                     {% if perms.posts.change_post %}
                         <a href="{% url 'post_update' post.pk %}" class="btn btn-warning btn-sm">
-                            ✏️ Tahrir
+                            ✏️ {% trans "Edit" %}
                         </a>
                     {% endif %}
 
                     {% if perms.posts.delete_post %}
                         <a href="{% url 'post_delete' post.pk %}" class="btn btn-danger btn-sm">
-                            🗑 O'chirish
+                            🗑 {% trans "Delete" %}
                         </a>
                     {% endif %}
                 </div>
@@ -59,9 +60,9 @@
     </div>
 {% else %}
     <div class="alert alert-info">
-        Hozircha postlar yo'q.
+        {% trans "No posts yet." %}
         {% if perms.posts.add_post %}
-            <a href="{% url 'post_create' %}">Birinchi postni yarating!</a>
+            <a href="{% url 'post_create' %}">{% trans "Create the first post!" %}</a>
         {% endif %}
     </div>
 {% endif %}

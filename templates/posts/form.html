@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
-
+{% load i18n %}
 {% block title %}Post {{ action }}{% endblock %}
-
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-7">
@@ -10,34 +9,44 @@
                 <h4>📝 Post {{ action }}</h4>
             </div>
             <div class="card-body">
-
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-
                     <div class="mb-3">
-                        <label class="form-label">Sarlavha</label>
-                        {{ form.title }}
-                        {% if form.title.errors %}
-                            <div class="text-danger small">{{ form.title.errors }}</div>
+                        <label class="form-label">Title [en]</label>
+                        {{ form.title_en }}
+                        {% if form.title_en.errors %}
+                            <div class="text-danger small">{{ form.title_en.errors }}</div>
                         {% endif %}
                     </div>
-
                     <div class="mb-3">
-                        <label class="form-label">Matn</label>
-                        {{ form.content }}
-                        {% if form.content.errors %}
-                            <div class="text-danger small">{{ form.content.errors }}</div>
+                        <label class="form-label">Title [uz]</label>
+                        {{ form.title_uz }}
+                        {% if form.title_uz.errors %}
+                            <div class="text-danger small">{{ form.title_uz.errors }}</div>
                         {% endif %}
                     </div>
-
                     <div class="mb-3">
-                        <label class="form-label">Rasm (ixtiyoriy)</label>
+                        <label class="form-label">Content [en]</label>
+                        {{ form.content_en }}
+                        {% if form.content_en.errors %}
+                            <div class="text-danger small">{{ form.content_en.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Content [uz]</label>
+                        {{ form.content_uz }}
+                        {% if form.content_uz.errors %}
+                            <div class="text-danger small">{{ form.content_uz.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{% trans "Image (optional)" %}</label>
                         {% if post.image %}
                             <div class="mb-2">
-                                <img src="{{ post.image.url }}" alt="Mavjud rasm"
+                                <img src="{{ post.image.url }}" alt="{% trans 'Current image' %}"
                                      style="max-width: 200px; max-height: 150px; object-fit: cover;"
                                      class="rounded border">
-                                <p class="text-muted small mt-1">Mavjud rasm. Yangi rasm yuklab almashtiring.</p>
+                                <p class="text-muted small mt-1">{% trans "Current image. Upload a new one to replace." %}</p>
                             </div>
                         {% endif %}
                         {{ form.image }}
@@ -45,14 +54,9 @@
                             <div class="text-danger small">{{ form.image.errors }}</div>
                         {% endif %}
                     </div>
-
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-primary">
-                            💾 Saqlash
-                        </button>
-                        <a href="{% url 'post_list' %}" class="btn btn-secondary">
-                            ❌ Bekor qilish
-                        </a>
+                        <button type="submit" class="btn btn-primary">💾 {% trans "Save" %}</button>
+                        <a href="{% url 'post_list' %}" class="btn btn-secondary">❌ {% trans "Cancel" %}</a>
                     </div>
                 </form>
             </div>

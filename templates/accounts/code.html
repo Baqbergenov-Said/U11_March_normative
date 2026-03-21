@@ -1,55 +1,39 @@
 {% extends 'base.html' %}
-
-{% block title %}Verify Code{% endblock %}
-
+{% load i18n %}
+{% block title %}{% trans "Verify Code" %}{% endblock %}
 {% block content %}
 <div class="row justify-content-center mt-5">
   <div class="col-md-5">
     <div class="card shadow-sm">
-
       <div class="card-header bg-dark text-white text-center">
-        <h5 class="mb-0">📩 Verify Code</h5>
+        <h5 class="mb-0">📩 {% trans "Verify Code" %}</h5>
       </div>
-
       <div class="card-body">
         <p class="text-muted text-center small mb-2">
-          Enter the 6-digit code sent to your email.
+          {% trans "Enter the 6-digit code sent to your email." %}
         </p>
-
         <div class="alert alert-warning text-center small py-2">
-          ⏱ Code is valid for <strong>2 minutes</strong> only!
+          ⏱ {% trans "Code is valid for" %} <strong>2 {% trans "minutes" %}</strong> {% trans "only!" %}
         </div>
-
-        {% for message in messages %}
-          <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-          </div>
-        {% endfor %}
-
         <form method="post">
           {% csrf_token %}
-
           <div class="mb-3">
-            <label class="form-label fw-semibold">Verification Code</label>
+            <label class="form-label fw-semibold">{% trans "Verification Code" %}</label>
             {{ form.code }}
             {% if form.code.errors %}
               <div class="text-danger small mt-1">{{ form.code.errors }}</div>
             {% endif %}
           </div>
-
           <button type="submit" class="btn btn-primary w-100">
-            Verify ✓
+            {% trans "Verify" %} ✓
           </button>
         </form>
-
         <div class="text-center mt-3">
           <small class="text-muted">
-            Didn't receive the code?
-            <a href="{% url 'Accounts:forgot-password' %}">Resend</a>
+            {% trans "Didn't receive the code?" %}
+            <a href="{% url 'Accounts:forgot-password' %}">{% trans "Resend" %}</a>
           </small>
         </div>
-
       </div>
     </div>
   </div>

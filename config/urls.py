@@ -7,8 +7,11 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('Post.urls')),
     path('accounts/', include('Accounts.urls')),
-
+    path('social/', include('allauth.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ]
+
+
 
 # Rasmlar uchun
 if settings.DEBUG:
